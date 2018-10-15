@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.googlecode.jsonrpc4j.JsonRpcError;
 import com.googlecode.jsonrpc4j.JsonRpcErrors;
+import com.googlecode.jsonrpc4j.JsonRpcMethod;
 import com.googlecode.jsonrpc4j.JsonRpcService;
 import com.jsonrpc.exceptions.InternalServerException;
 import com.jsonrpc.exceptions.NoContentException;
@@ -19,24 +20,28 @@ public interface WebUserService {
         @JsonRpcError(exception=InternalServerException.class, code=99, message="System is busy. Please try again later"),
         @JsonRpcError(exception=Throwable.class, code=1, message="Internal Server Error")
     })
+	@JsonRpcMethod(value = "create-user")
 	public WebUser createUser(WebUser user);
 	
 	@JsonRpcErrors({
         @JsonRpcError(exception=UserNotFoundException.class, code=101, message="User not found"),
         @JsonRpcError(exception=Throwable.class, code=1, message="Internal Server Error")
     })
+	@JsonRpcMethod(value = "find-user-by-id")
 	public WebUser findUserById(long id);
 	
 	@JsonRpcErrors({
         @JsonRpcError(exception=UserNotFoundException.class, code=101, message="User not found"),
         @JsonRpcError(exception=Throwable.class, code=1, message="Internal Server Error")
     })
+	@JsonRpcMethod(value = "find-user-by-username")
 	public WebUser findUserByUsername(String username);
 	
 	@JsonRpcErrors({
 		@JsonRpcError(exception=NoContentException.class, code=102, message="No data found"),
         @JsonRpcError(exception=Throwable.class, code=1, message="Internal Server Error")
 	})
+	@JsonRpcMethod(value = "find-all-users")
 	public List<WebUser> findAllUsers();
 	
 }
